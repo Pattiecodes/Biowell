@@ -165,3 +165,40 @@ CREATE TABLE post_comments (
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Ensure application_code column exists in insurance_application and create unique index if missing
+-- This block is idempotent and safe to run multiple times.
+SET @col_exists := (
+    SELECT COUNT(*)
+    FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'insurance_application'
+      AND COLUMN_NAME = 'application_code'
+);
+
+SET @alter_col_sql := IF(@col_exists = 0,
+    'ALTER TABLE insurance_application ADD COLUMN application_code VARCHAR(255) NULL',
+    'SELECT "application_code_already_exists"'
+);
+
+PREPARE stmt_col FROM @alter_col_sql;
+EXECUTE stmt_col;
+DEALLOCATE PREPARE stmt_col;
+
+-- Ensure unique index on application_code (prefix 191 for utf8mb4 safety)
+SET @idx_exists := (
+    SELECT COUNT(1)
+    FROM information_schema.STATISTICS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'insurance_application'
+      AND INDEX_NAME = 'ux_application_code'
+);
+
+SET @create_idx_sql := IF(@idx_exists = 0,
+    'ALTER TABLE insurance_application ADD UNIQUE KEY ux_application_code (application_code(191))',
+    'SELECT "ux_application_code_already_exists"'
+);
+
+PREPARE stmt_idx FROM @create_idx_sql;
+EXECUTE stmt_idx;
+DEALLOCATE PREPARE stmt_idx;
