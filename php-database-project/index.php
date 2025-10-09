@@ -1,4 +1,6 @@
 <?php
+// Load serverless bootstrap (sets BASE_PATH, include_path, and SERVERLESS_PHP flag)
+require_once __DIR__ . '/src/bootstrap.php';
 session_start();
 // Simple role simulation for demo (replace with real login/session logic)
 if (!isset($_SESSION['role'])) {
