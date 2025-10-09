@@ -1,0 +1,22 @@
+Admin
+email: har
+pw: har
+
+agent
+email: car
+pw: car
+
+Continue:
+Agent's View:
+- Do not let them edit the status of their tickets
+and their quotations, only admins can do that.
+- Connect database to the editing both quotation and ticket
+views. 
+- Automatically assign the application id when creating
+a new quotation. And make it that when creating a 
+new ticket - an agent can choose from the application
+ids they created. Application ID naming convention:
+ClientSurname_indexedApplicationNumber
+
+Admin View:
+- 

@@ -1,0 +1,88 @@
+/* biowell.css - Custom styles for BioWell Insurance Company */
+body {
+    background: #f8f9fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.navbar {
+    background: #e9ecef;
+    border-bottom: 2px solid #cfd8dc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #333;
+}
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+    margin-right: 1.5rem;
+    transition: color 0.2s;
+}
+.navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+    color: #1976d2;
+    border-bottom: 2px solid #1976d2;
+    background: none;
+}
+.navbar-nav .nav-item:last-child .nav-link {
+    margin-right: 0;
+}
+.top-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.agent-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #bdbdbd;
+    display: inline-block;
+    vertical-align: middle;
+}
+.home-banner {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.home-banner .banner-img {
+    width: 120px;
+    height: 120px;
+    background: #e0e0e0;
+    border-radius: 8px;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #757575;
+}
+.announcements, .events {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.announcements h5, .events h5 {
+    color: #1976d2;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+.announcements p, .events p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+    .home-banner {
+        padding: 1rem;
+    }
+    .announcements, .events {
+        padding: 1rem;
+    }
+}
