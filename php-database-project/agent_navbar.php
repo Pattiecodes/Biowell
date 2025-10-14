@@ -1,12 +1,12 @@
 <?php
 // agent_navbar.php
 ?>
-<!-- Top Brand Row -->
+<!-- top brand row -->
 <div style="background: #f8f9fa; border-bottom: 1px solid #ddd; padding: 0.5rem 0;">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div>
             <span style="font-weight:600; font-size:1.1rem; vertical-align:middle;">
-                <!-- <img src="logo.png" alt="Bio-Well Insurance Company" style="height:28px; vertical-align:middle; margin-right:8px;"> -->
+                <!-- <img src="logo.png" alt="bio-well insurance company" style="height:28px; vertical-align:middle; margin-right:8px;"> -->
                 Bio-Well Insurance Company
             </span>
         </div>
@@ -15,7 +15,7 @@
         </div>
     </div>
 </div>
-<!-- Icon Navbar Row -->
+<!-- icon navbar row -->
 <div style="background: #ededed; border-bottom: 2px solid #ccc;">
     <div class="container-fluid">
         <ul class="nav justify-content-center" style="gap:2.5rem; padding:0.5rem 0;">

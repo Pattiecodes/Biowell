@@ -1,30 +1,30 @@
 <#
-PowerShell helper to import src/biowell_insurance.sql into a remote MySQL database.
-Usage: run from project root in PowerShell:
-  .\scripts\import-db.ps1
+powershell helper to import src/biowell_insurance.sql into a remote mysql database.
+usage: run from project root in powershell:
+    .\scripts\import-db.ps1
 
-It will prompt for host, port, user, database name and password.
-If mysql.exe isn't in PATH, the script will try common XAMPP/MySQL install locations and prompt for the path.
+it will prompt for host, port, user, database name and password.
+if mysql.exe isn't in path, the script will try common xampp/mysql install locations and prompt for the path.
 #>
 
-# Ensure script runs from project root where src/biowell_insurance.sql is located
+# ensure script runs from project root where src/biowell_insurance.sql is located
  $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Push-Location $scriptDir\.. | Out-Null
 
 Write-Host "BioWell DB import helper"
-# Use variable names that won't conflict with PowerShell automatic variables
+# use variable names that won't conflict with powershell automatic variables
 $dbHost = Read-Host "DB host (e.g. db.example.com)"
 $dbPort = Read-Host "DB port (default 3306)"; if ([string]::IsNullOrWhiteSpace($dbPort)) { $dbPort = '3306' }
 $dbName = Read-Host "Database name (e.g. biowell_insurance)"
 $dbUser = Read-Host "DB user"
-# Securely read password
+# securely read password
 $dbPasswordSecure = Read-Host "DB password (leave blank for no password)" -AsSecureString
 # convert secure string to plain (used only for calling mysql client)
 $ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($dbPasswordSecure)
 $dbPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto($ptr)
 [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr)
 
-# Locate mysql.exe
+# locate mysql.exe
 $mysqlExe = Get-Command mysql.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source -ErrorAction SilentlyContinue
 if (-not $mysqlExe) {
     $candidates = @(
@@ -54,7 +54,7 @@ if (-not (Test-Path $sqlFile)) {
     exit 1
 }
 
-# Build args for mysql client
+# build args for mysql client
 $args = @()
 $args += "-h"; $args += $dbHost
 $args += "-P"; $args += $dbPort
@@ -66,7 +66,7 @@ $args += $dbName
 
 Write-Host "Running import using:`n  $mysqlExe $($args -join ' ')"
 
-# Pipe the SQL file into mysql.exe (this avoids shell redirect issues)
+# pipe the sql file into mysql.exe (this avoids shell redirect issues)
 try {
     Get-Content -Raw -Path $sqlFile | & $mysqlExe @args
     $exit = $LASTEXITCODE

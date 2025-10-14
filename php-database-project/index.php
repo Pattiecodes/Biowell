@@ -1,12 +1,12 @@
 <?php
-// Load serverless bootstrap (sets BASE_PATH, include_path, and SERVERLESS_PHP flag)
+// load serverless bootstrap (sets base_path, include_path, and serverless_php flag)
 require_once __DIR__ . '/src/bootstrap.php';
 session_start();
-// Simple role simulation for demo (replace with real login/session logic)
+// simple role simulation for demo (replace with real login/session logic)
 if (!isset($_SESSION['role'])) {
     $_SESSION['role'] = 'guest'; // guest, agent, admin
 }
-// Database connection
+// database connection
 require_once __DIR__ . '/src/config/database.php';
 try {
     $pdo = new PDO("mysql:host={$dbHost};dbname={$dbName};charset=utf8", $dbUsername, $dbPassword);
@@ -15,13 +15,13 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Simple role simulation for demo (replace with real login/session logic)
+// simple role simulation for demo (replace with real login/session logic)
 if (!isset($_SESSION['role'])) {
     $_SESSION['role'] = 'guest'; // guest, agent, admin
 }
 $role = $_SESSION['role'];
 
-// Page routing
+// page routing
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
 function navItem($name, $page, $icon = '') {
@@ -60,10 +60,10 @@ if ($role === 'admin') {
 <?php } ?>
 <div class="container">
     <?php
-    // Main content area
+    // main content area
     switch ($page) {
         case 'home':
-            // Public/Home dashboard - show announcements and events from DB (same source as admin/agent)
+            // public/home dashboard - show announcements and events from db (same source as admin/agent)
             try {
                 $stmtA = $pdo->prepare("SELECT id, title, content, category, created_at FROM posts WHERE category IN ('news','promo','update') ORDER BY created_at DESC LIMIT 20");
                 $stmtA->execute();
@@ -148,17 +148,17 @@ if ($role === 'admin') {
             }
             break;
         case 'create_ticket':
-            // Ticket creation logic
+            // ticket creation logic
             $ticketMsg = '';
             if (($role == 'agent' || $role == 'admin') && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subject'], $_POST['company'], $_POST['application_id'], $_POST['product'], $_POST['note'], $_POST['agent_id'])) {
                 $subject = trim($_POST['subject']);
                 $company = trim($_POST['company']);
                 $application_id = trim($_POST['application_id']);
-                $product = trim($_POST['product']); // Not used in DB insert
+                $product = trim($_POST['product']); // not used in db insert
                 $note = trim($_POST['note']);
                 $agent_id = trim($_POST['agent_id']);
                 $created_by_user_id = $_SESSION['user_id'];
-                // Validate agent_id exists in agents table
+                // validate agent_id exists in agents table
                 $stmtCheck = $pdo->prepare("SELECT user_id FROM agents WHERE user_id = ?");
                 $stmtCheck->execute([$agent_id]);
                 if ($stmtCheck->fetch()) {
@@ -207,7 +207,7 @@ if ($role === 'admin') {
             }
             break;
         case 'create_quotation':
-            // Quotation creation logic
+            // quotation creation logic
             $quotationMsg = '';
             if ($role == 'agent' && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['client_name'], $_POST['client_address'], $_POST['client_email'], $_POST['product'], $_POST['notes'])) {
                 $client_name = trim($_POST['client_name']);
@@ -215,13 +215,13 @@ if ($role === 'admin') {
                 $client_email = trim($_POST['client_email']);
                 $product = trim($_POST['product']);
                 $notes = trim($_POST['notes']);
-                // Require agent to exist in agents table
+                // require agent to exist in agents table
                 $agent_id = $_SESSION['user_id'];
                 $stmtCheck = $pdo->prepare("SELECT user_id FROM agents WHERE user_id = ?");
                 $stmtCheck->execute([$agent_id]);
                 if ($stmtCheck->fetch()) {
                     $stmt = $pdo->prepare("INSERT INTO insurance_application (product_id, agent_id, status, application_date, notes) VALUES (?, ?, 'pending', NOW(), ?)");
-                    // For demo, product_id is not resolved from name, so set as NULL
+                    // for demo, product_id is not resolved from name, so set as null
                     $stmt->execute([null, $agent_id, $notes]);
                     $quotationMsg = '<div class=\'alert alert-success\'>Quotation request submitted!</div>';
                 } else {
@@ -240,7 +240,7 @@ if ($role === 'admin') {
             </form>";
             break;
         case 'agents':
-                // Admin view: show all agents and applications
+                // admin view: show all agents and applications
                 if ($role == 'admin') {
                     echo "<h2>Agent Management</h2>";
                     $stmt = $pdo->query("SELECT * FROM users WHERE role = 'agent'");
@@ -254,7 +254,7 @@ if ($role === 'admin') {
                 }
                 break;
         case 'products':
-                // Admin view: show all products
+                // admin view: show all products
                 if ($role == 'admin') {
                     echo "<h2>Manage Products</h2>";
                     $stmt = $pdo->query("SELECT * FROM insurance_products");
@@ -268,7 +268,7 @@ if ($role === 'admin') {
                 }
                 break;
         case 'announcements':
-            // Shared: Agents and Admins can view announcements
+            // shared: agents and admins can view announcements
             try {
                 $stmt = $pdo->prepare("SELECT id, title, content, category, created_at FROM posts WHERE category IN ('news','promo','update') ORDER BY created_at DESC");
                 $stmt->execute();
@@ -290,7 +290,7 @@ if ($role === 'admin') {
             echo "</div></div>";
             break;
         case 'events':
-            // Shared: Agents and Admins can view events
+            // shared: agents and admins can view events
             try {
                 $stmt = $pdo->prepare("SELECT id, title, content, created_at FROM posts WHERE category = 'event' ORDER BY created_at DESC");
                 $stmt->execute();
@@ -312,7 +312,7 @@ if ($role === 'admin') {
             echo "</div></div>";
             break;
         case 'profile':
-            // Shared: Agents and Admins can update profile
+            // shared: agents and admins can update profile
             if ($role != 'guest') {
                 // Fetch user info
                 $user_id = $_SESSION['user_id'];

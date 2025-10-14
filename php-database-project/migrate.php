@@ -1,6 +1,6 @@
 <?php
 // migrate.php
-// Run this once (CLI: php migrate.php) to apply safe, idempotent schema and seed updates.
+// run this once (cli: php migrate.php) to apply safe, idempotent schema and seed updates.
 require_once __DIR__ . '/src/config/database.php';
 try {
     $pdo = new PDO("mysql:host={$dbHost};dbname={$dbName};charset=utf8", $dbUsername, $dbPassword);
@@ -18,7 +18,7 @@ function columnExists(PDO $pdo, $table, $column) {
 
 $tasks = [];
 
-// Ensure columns in insurance_application
+// ensure columns in insurance_application
 $iaTable = 'insurance_application';
 $cols = [
     'client_name' => "VARCHAR(255) NOT NULL",
@@ -39,7 +39,7 @@ foreach ($cols as $col => $def) {
     }
 }
 
-// Ensure unique index on application_code
+// ensure unique index on application_code
 try {
     $idxCheck = $pdo->query("SHOW INDEX FROM `$iaTable` WHERE Key_name = 'idx_application_code'")->fetchAll();
     if (count($idxCheck) === 0) {
@@ -52,7 +52,7 @@ try {
     $tasks[] = "Index check/create failed: " . $e->getMessage();
 }
 
-// Ensure products VIP and Regular with correct PHP prices
+// ensure products vip and regular with correct php prices
 $products = [
     ['name' => 'VIP', 'company' => 'BioWell', 'desc' => 'VIP insurance product - PHP 2,500.00/month', 'premium' => 2500.00],
     ['name' => 'Regular', 'company' => 'BioWell', 'desc' => 'Regular insurance product - PHP 600.00/month', 'premium' => 600.00],
@@ -62,7 +62,7 @@ foreach ($products as $p) {
     $stmt->execute([$p['name']]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($row) {
-        // update premium/description if different
+    // update premium/description if different
         if (floatval($row['premium']) !== floatval($p['premium'])) {
             $u = $pdo->prepare("UPDATE insurance_products SET premium = ?, description = ? WHERE id = ?");
             $u->execute([$p['premium'], $p['desc'], $row['id']]);
@@ -77,7 +77,7 @@ foreach ($products as $p) {
     }
 }
 
-// Ensure agents.acct_num exists for existing agents without it
+// ensure agents.acct_num exists for existing agents without it
 try {
     $stmt = $pdo->query("SELECT user_id FROM agents WHERE acct_num IS NULL OR acct_num = ''");
     $missing = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -95,7 +95,7 @@ try {
     $tasks[] = "Failed to ensure acct_num: " . $e->getMessage();
 }
 
-// Report
+// report
 echo "Migration report:\n";
 foreach ($tasks as $t) {
     echo " - " . $t . "\n";
