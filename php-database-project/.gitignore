@@ -1,0 +1,6 @@
+# Ignore local helper scripts that should not be committed
+/create_admin.php
+/scripts/*.php
+*.env
+.env.local
+.env.*
