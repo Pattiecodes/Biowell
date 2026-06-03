@@ -49,6 +49,7 @@ The application code is in:
 4. Confirm database settings in:
    - `src/config/database.php`
    - or set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASS`
+   - environment variables can be defined in your shell (for example, `export DB_HOST=...`) or in your server hosting environment settings
 5. (Optional) Run the migration script:
    ```bash
    php migrate.php
