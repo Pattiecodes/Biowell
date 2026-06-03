@@ -1,23 +1,26 @@
-# PHP Database Project
+# BioWell Insurance Management Application
 
-This project is designed to demonstrate how to create a MySQL database using PHP. It includes the necessary files to connect to a MySQL server and execute SQL statements to create a new database.
+This application was developed for a client, **BioWell**, to conform to the business requirements of an insurance agency company.
 
-## Project Structure
+## Project Goals
 
-```
-php-database-project
-├── src
-│   ├── create_database.php      # Contains the code to create a database
-│   └── config
-│       └── database.php          # Configuration settings for the database connection
-├── composer.json                 # Composer configuration file
-└── README.md                     # Documentation for the project
-```
+- Centralize insurance operations in one web application.
+- Support role-based workflows for admins and agents.
+- Streamline day-to-day tasks such as managing products, quotations, tickets, announcements, and events.
+- Maintain a reliable MySQL-backed data layer for business records.
+
+## How the Solution Accomplishes These Goals
+
+- Implements dedicated admin and agent pages for operational tasks (products, quotations, tickets, and profile/workflow screens).
+- Uses session-based role access to separate responsibilities between user types.
+- Connects application features to a shared MySQL database via reusable configuration in `src/config/database.php`.
+- Organizes the project into focused PHP modules to support maintainability and future enhancements.
 
 ## Requirements
 
-- PHP 7.0 or higher
+- PHP 7.4 or higher
 - MySQL server
+- Composer
 
 ## Credits
 
