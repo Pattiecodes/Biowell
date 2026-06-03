@@ -1,6 +1,6 @@
 # BioWell Insurance Management Application
 
-This application was developed for a client, **BioWell**, to conform to the business requirements of an insurance agency company.
+This application was developed for **BioWell** to meet the business requirements of an insurance agency company.
 
 ## Project Goals
 
