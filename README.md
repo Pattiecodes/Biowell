@@ -1,0 +1,52 @@
+# BioWell
+
+BioWell is a PHP and MySQL insurance management application.
+
+## What this project includes
+
+- Admin and agent views
+- Insurance products, quotations, and tickets
+- Database schema and migration scripts
+
+## Project location
+
+The application code is in:
+
+`/tmp/workspace/Pattiecodes/Biowell/php-database-project`
+
+## Requirements
+
+- PHP 7.4+ (or PHP 8+)
+- MySQL
+- Composer
+
+## Quick start
+
+1. Go to the project directory:
+   ```bash
+   cd /tmp/workspace/Pattiecodes/Biowell/php-database-project
+   ```
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
+3. Create the database using the schema file:
+   - `/tmp/workspace/Pattiecodes/Biowell/php-database-project/src/biowell_insurance.sql`
+4. Confirm database settings in:
+   - `/tmp/workspace/Pattiecodes/Biowell/php-database-project/src/config/database.php`
+   - or set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASS`
+5. (Optional) run the migration script:
+   ```bash
+   php migrate.php
+   ```
+6. Start the app:
+   ```bash
+   php -S localhost:8000
+   ```
+7. Open:
+   - `http://localhost:8000/index.php`
+
+## Notes
+
+- This repository also includes a project-level README at:
+  - `/tmp/workspace/Pattiecodes/Biowell/php-database-project/README.md`
