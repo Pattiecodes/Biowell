@@ -6,12 +6,20 @@ This project is designed to demonstrate how to create a MySQL database using PHP
 
 ```
 php-database-project
+├── index.php                     # Main entry point and page router
+├── admin_*.php                  # Admin dashboard/pages (tickets, quotations, products, etc.)
+├── agent_*.php                  # Agent dashboard/pages (tickets, quotations, profile, etc.)
+├── biowell.css                  # App styling
+├── biowell.js                   # Client-side interactions
+├── migrate.php                  # Idempotent schema/data migration runner
 ├── src
-│   ├── create_database.php      # Contains the code to create a database
-│   └── config
-│       └── database.php          # Configuration settings for the database connection
-├── composer.json                 # Composer configuration file
-└── README.md                     # Documentation for the project
+│   ├── config/database.php      # Database connection settings
+│   ├── db.php                   # Shared DB bootstrap/helpers
+│   ├── create_database.php      # Database creation script
+│   └── biowell_insurance.sql    # SQL schema and seed data
+├── scripts/import-db.ps1        # PowerShell helper to import database
+├── composer.json                # Composer configuration
+└── README.md                    # Project documentation
 ```
 
 ## Requirements
